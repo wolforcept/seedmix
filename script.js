@@ -5,12 +5,15 @@ function pop(parentObj) {
     if (DATA.sun > 100) {
         addSun(-100);
         refreshUI();
+    } else {
+        // return;
     }
 
-    const obj = createObject("carrots:1", parentObj.getX(), parentObj.getY());
+    const obj = createObject({ id: "carrots", stage: 1, x: parentObj.getX(), y: parentObj.getY() });
 
+    const life = 10 + Math.random() * 10;
     let i = 0;
-    let velX = -10 + Math.random() * 20, velY = -20;
+    let velX = -4 + Math.random() * 8, velY = -12 - Math.random() * 3;
     let accX = 0, accY = 1;
     let interval = setInterval(() => {
         obj.setX(obj.getX() + velX);
@@ -18,46 +21,39 @@ function pop(parentObj) {
         velX += accX;
         velY += accY;
         i++;
-        if (i > 30) clearInterval(interval);
+        if (i > life) clearInterval(interval);
     }, 1000 / 60);
 }
 
-const onClicks = {
-    "seed_bag": pop
-}
-
-function joinObjects(obj1, obj2) {
+function tryJoinObjects(obj1, obj2) {
 
     const id = obj1.getId();
+    const stage = obj1.getStage();
     const id2 = obj2.getId();
-
-    if (id !== id2) return;
-
-    const stage = getStageOf(id);
+    const stage2 = obj2.getStage();
     const maxStage = DEFINITIONS[id].maxStage;
-    if (stage >= maxStage) return;
 
-    try {
-        obj1.droppable("destroy");
-        obj2.droppable("destroy");
+    if (id !== id2 || stage !== stage2 || stage >= maxStage + 3) return;
 
-        obj1.remove();
-        obj2.remove();
+    obj1.remove();
+    obj2.remove();
 
-        createObject(nextStageOf(id), obj1.getX(), obj1.getY());
-    } catch (e) {
-    }
+    createObject({ id, stage: stage + 1, x: obj1.getX(), y: obj1.getY() });
 }
 
-function createObject(id, x, y) {
-    const preId = id.split(":")[0];
+function createObject({ id, stage, x, y }) {
+    const { images, maxStage, onClick } = DEFINITIONS[id];
+    const color = DEFINITIONS[id].color ?? "00000000";
     const obj = $(`
-    <div class="obj" style="width: ${SIZE}vw; height: ${SIZE}vw; background-color:#${DEFINITIONS[preId].color ?? "00000000"};">
-        <img src="images/${DEFINITIONS[preId].images[getStageOf(id)]}.png" style="width: ${SIZE}vw">
+    <div class="obj" style="width: ${SIZE}vw; height: ${SIZE}vw; background-color:#${color};">
+        <img class="img" src="images/${images[Math.min(stage, maxStage) - 1] ?? id}.png">
     </div>`);
+    if (stage > maxStage)
+        obj.append($(`<img class="star" src="images/star_${stage - maxStage}.png" >`))
     obj.attr('id', id);
+    obj.attr('stage', stage);
 
-    if (onClicks[id]) obj.on('click', () => onClicks[preId](obj));
+    if (onClick) obj.on('click', () => onClick(obj));
     $('body').append(obj);
 
     obj.draggable({
@@ -72,7 +68,8 @@ function createObject(id, x, y) {
         drop: function (event, ui) {
             var draggedElement = ui.draggable;
             var droppedElement = $(this);
-            joinObjects(draggedElement, droppedElement);
+            obj.droppable('option', 'accept', draggedElement);
+            return tryJoinObjects(draggedElement, droppedElement);
         },
     });
 
@@ -82,17 +79,15 @@ function createObject(id, x, y) {
     return obj;
 }
 
-function stepObject(id) {
-    switch (id) {
-        case "carrots4": addSun(1); return;
-        case "carrots5": addSun(2); return;
-        case "carrots6": addSun(4); return;
-    }
-}
 
 function step() {
     addSun(1);
-    $(".obj").each((_, x) => stepObject($(x).getId()));
+    $(".obj").each((_, x) => {
+        const obj = $(x);
+        const def = DEFINITIONS[obj.getId()];
+        const step = def.step;
+        if (step) step(obj);
+    });
     refreshUI();
 }
 
@@ -103,9 +98,9 @@ function refreshUI() {
 
 load();
 if ($(".obj").length === 0) {
-    createObject("seed_bag:1");
+    createObject({ id: "seedBag", stage: 1 });
 }
 
-setInterval(save, 10 * 1000);
+// setInterval(save, 10 * 1000);
 setInterval(step, 1000);
 refreshUI();

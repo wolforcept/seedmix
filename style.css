@@ -23,10 +23,21 @@ body {
 }
 
 .obj img {
-    transform: translateY(-25%);
     pointer-events: none;
-
     image-rendering: pixelated;
+}
+
+.obj img.img {
+    transform: translateY(-25%);
+    width: 100%;
+}
+
+.obj img.star{
+    position: absolute;
+    left: -10%;
+    top: -10%;
+    width: 50%;
+    image-rendering: crisp-edges;
 }
 
 #sunBarWrapper {

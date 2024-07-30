@@ -11,7 +11,7 @@ function save() {
     const objs = [];
     $(".obj").each((_, x) => {
         const obj = $(x);
-        objs.push({ id: obj.getId(), x: obj.getX(), y: obj.getY() });
+        objs.push({ id: obj.getId(), stage: obj.getStage(), x: obj.getX(), y: obj.getY() });
     });
     localStorage.setItem("seedmix_saved_objs", JSON.stringify(objs));
     localStorage.setItem("seedmix_saved_data", JSON.stringify(DATA));
@@ -22,11 +22,7 @@ function save() {
 function load() {
 
     const objs = JSON.parse(localStorage.getItem("seedmix_saved_objs"));
-    if (objs) {
-        objs.forEach(o => {
-            createObject(o.id, o.x, o.y);
-        });
-    }
+    if (objs) objs.forEach(o => createObject(o));
 
     const data = JSON.parse(localStorage.getItem("seedmix_saved_data"));
     if (data) {
@@ -34,31 +30,23 @@ function load() {
     }
 }
 
-function getImgName(id) {
-
-    if (id.startsWith('carrots')) {
-        return "row-25-column-2";
-    }
-    // case "carrots1": return "row-25-column-2";
-    // case "carrots2": return "row-25-column-3";
-    // case "carrots3": return "row-25-column-4";
-    // case "carrots4": return "row-25-column-5";
-    return id;
-}
-
-const JOINS = {
-    "carrots:1+carrots:1": "carrots:2",
-    "carrots:2+carrots:2": "carrots:3",
-    "carrots:3+carrots:3": "carrots:4",
-}
-
 const DEFINITIONS = {
-    "seed_bag": {
-        color: "33ae5a"
+    "seedBag": {
+        color: "33ae5a",
+        maxStage: 1,
+        images: [],
+        onClick: (obj) => pop(obj),
     },
     "carrots": {
         color: "e4831c",
-        maxStage: 5,
-        images: ["row-25-column-2", "row-25-column-3", "row-25-column-4", "row-25-column-5"]
+        maxStage: 4,
+        images: ["row-25-column-2", "row-25-column-3", "row-25-column-4", "row-25-column-5"],
+        step: (obj) => {
+            const id = obj.getId();
+            const stage = obj.getStage();
+            const { maxStage } = DEFINITIONS[id];
+            if (obj.getStage() >= maxStage)
+                addSun(maxStage - stage)
+        }
     }
 }

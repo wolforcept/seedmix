@@ -26,10 +26,6 @@ $.fn.getId = function () {
     return this.attr('id');
 };
 
-function getStageOf(id) {
-    return Number(id.split(":")[1]);
-}
-
-function nextStageOf(id) {
-    return id.split(":")[0] + (1 + getStageOf(id));
-}
+$.fn.getStage = function () {
+    return Number(this.attr('stage'));
+};
