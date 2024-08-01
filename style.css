@@ -9,7 +9,7 @@ body {
 .obj {
     position: fixed;
 
-    border-radius: 5vw;
+    border-radius: 25%;
     background-color: red;
     border: 1vw dashed #00000020;
     box-sizing: border-box;
@@ -20,6 +20,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    max-width: 128px;
+    max-height: 128px;
 }
 
 .obj img {
@@ -32,7 +35,7 @@ body {
     width: 100%;
 }
 
-.obj img.star{
+.obj img.star {
     position: absolute;
     left: -10%;
     top: -10%;
@@ -43,20 +46,22 @@ body {
 #sunBarWrapper {
     position: fixed;
     bottom: 2vw;
-    height: 10vw;
-    width: 90vw;
-    left: 5vw;
+    height: 8vw;
+    width: 72vw;
+    left: 13vw;
 
-    background-color: #00000020;
+    background-color: #ffe60009;
 
     border-radius: 4vw;
-    border: 1vw dashed #00000020;
+    border: 1vw dashed #ffe600;
 
     overflow: hidden;
+
+    max-height: 5vh;
 }
 
 #sunBar {
-    background-color: rgb(255, 230, 0);
+    background-color: #ffe600;
     height: 100%;
 
     display: flex;
@@ -66,4 +71,82 @@ body {
 
     font-size: 5vw;
     font-weight: bold;
+
+    max-height: 128px;
+}
+
+#sellBar {
+    position: fixed;
+    top: 2vw;
+    height: 10vw;
+    width: 90vw;
+    left: 5vw;
+
+    background-color: #309e8620;
+
+    border-radius: 4vw;
+    border: 1vw dashed #309e86;
+
+    overflow: hidden;
+
+    color: white;
+    font-weight: bold;
+    font-size: 8vw;
+
+    text-align: center;
+
+    margin-top: -100%;
+    transition-timing-function: linear;
+    transition: margin-top 1s;
+
+    max-height: 128px;
+}
+
+#sellBar.visible {
+    transition: margin-top 0.2s;
+    margin-top: 0;
+}
+
+#gearButton,
+#shopButton {
+    position: fixed;
+    bottom: 2vw;
+    height: 10vw;
+    width: 10vw;
+    left: 1.7vw;
+}
+
+#shopButton {
+    left: auto;
+    right: 1.7vw;
+}
+
+#gearButton img,
+#shopButton img {
+    width: 10vw;
+}
+
+@media (orientation:landscape) {
+    #sunBarWrapper {
+        border-width: .5vh;
+    }
+
+    #shopButton {
+        right: 1vh;
+        max-width: 10vh;
+        max-height: 10vh;
+    }
+
+    #gearButton {
+        left: 1vh;
+        max-width: 10vh;
+        max-height: 10vh;
+    }
+
+    #shopButton img,
+    #gearButton img {
+        height: 10vh;
+        width: auto;
+    }
+
 }

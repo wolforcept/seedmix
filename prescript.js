@@ -29,3 +29,27 @@ $.fn.getId = function () {
 $.fn.getStage = function () {
     return Number(this.attr('stage'));
 };
+
+$.fn.render = function () {
+    const id = this.getId();
+    const def = DEFINITIONS[id];
+    this.empty();
+    this.append(def.render(this));
+};
+
+Array.prototype.random = function () {
+    return this[Math.floor(Math.random() * this.length)];
+}
+
+function gaussianRandom(mean = 0, stdev = 1) {
+    const u = 1 - Math.random();
+    const v = Math.random();
+    const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    return z * stdev + mean;
+}
+
+Array.prototype.gaussianRandom = function (stdev) {
+    let index = Math.floor(Math.abs(gaussianRandom(0, stdev)));
+    while (index >= this.length) index -= this.length;
+    return this[index];
+}
