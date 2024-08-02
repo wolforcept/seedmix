@@ -1,15 +1,22 @@
 $.fn.setX = function (val) {
-    if (typeof val === 'string' || val instanceof String)
-        this.css('left', val);
-    else
+    if (val === undefined) {
+        this.css('left', (50 - SIZE / 2) + 'vw');
+        // } else if (typeof val === 'string' || val instanceof String) {
+        //     this.css('left', val);
+    } else {
         this.css('left', val + "px");
+    }
 };
 
 $.fn.setY = function (val) {
-    if (typeof val === 'string' || val instanceof String)
-        this.css('top', val);
-    else
+    if (val === undefined) {
+        this.css('top', (50 - SIZE / 2) + 'vw');
+    }
+    // else if (typeof val === 'string' || val instanceof String)
+    //     this.css('top', val);
+    else {
         this.css('top', val + "px");
+    }
 };
 
 $.fn.getX = function () {
@@ -27,7 +34,9 @@ $.fn.getId = function () {
 };
 
 $.fn.getStage = function () {
-    return Number(this.attr('stage'));
+    const str = this.attr('stage');
+    if (!str) return 0;
+    return Number(str);
 };
 
 $.fn.render = function () {

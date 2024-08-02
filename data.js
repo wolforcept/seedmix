@@ -30,6 +30,12 @@ function load() {
     }
 }
 
+function clear() {
+
+    localStorage.clear();
+    location.reload();
+}
+
 function generateSunRelativeToStage(obj, multiplier = 1) {
     const id = obj.getId();
     const stage = obj.getStage();
@@ -70,7 +76,13 @@ const DEFINITIONS = {
                 return;
             }
 
-            const id = springVegetables.gaussianRandom(1);
+            let totalStages = 0;
+            const values = [0, 0, 1, 5, 10, 30, 100, 200];
+            $('.obj').each((_, o) => totalStages += values[Number($(o).getStage())]);
+            console.log(totalStages);
+            const stdev = totalStages > 1000 ? 3 : totalStages > 100 ? 2 : 1;
+
+            const id = springVegetables.gaussianRandom(stdev);
             const newObj = createObject({ id, stage: 1, x: obj.getX(), y: obj.getY() });
             popObj(newObj);
         },
@@ -95,7 +107,7 @@ const DEFINITIONS = {
         maxStage: 5,
         row: 1, col: 2,
         values: [12, 25, 40],
-        step: generateSunRelativeToStage
+        step: obj => popSunRelativeToStage(obj, [1, 1, 1])
     },
     "rhubarb": {
         color: "cf5c5c",
