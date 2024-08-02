@@ -150,6 +150,8 @@ function align(obj) {
 
 function createObject(props) {
     let { id, stage, x, y, scale } = props;
+    console.log("creating obj ", id);
+    if (!stage) stage = 1;
     const { maxStage, onClick, render } = DEFINITIONS[id];
     const color = DEFINITIONS[id].color ?? "00000000";
     const obj = $(`<div class="obj" style="width: ${SIZE}vw; height: ${SIZE}vw; background-color:#${color};"></div>`);
@@ -176,7 +178,7 @@ function createObject(props) {
                 if (value > 0) {
                     const sellBar = $('#sellBar');
                     sellBar.addClass("visible");
-                    sellBar.html("Sell for " + value + "$");
+                    sellBar.html(`Sell for ${value} <img src="images/coin.png">`);
                 }
             }
         },
@@ -184,15 +186,19 @@ function createObject(props) {
             const width = $('body').width();
             const height = $('body').height();
             const s = SIZE * width / 100;
+            const startX = Number(obj.attr('startx'));
+            const startY = Number(obj.attr('starty'));
             const finalX = s * Math.round(obj.getX() / s);
             const finalY = s * Math.round(obj.getY() / s);
+
+            if (Math.abs(finalX - startX) < 3 && Math.abs(finalY - startY) < 3 && onClick) onClick(obj)
 
             if (finalX >= 0 && finalY >= 0 && finalX < width - s && finalY < height - s) {
                 obj.setX(finalX);
                 obj.setY(finalY);
             } else {
-                obj.setX(Number(obj.attr('startx')));
-                obj.setY(Number(obj.attr('starty')));
+                obj.setX(startX);
+                obj.setY(startY);
             }
             align(obj);
             $('#sellBar').removeClass("visible");
@@ -232,6 +238,8 @@ function step() {
         // console.log(obj.css('z-index'))
     });
 
+    DATA.lastOnline = Date.now();
+
     refreshUI();
 }
 
@@ -241,12 +249,44 @@ function refreshUI() {
         drop: function (event, ui) {
             var getValue = DEFINITIONS[ui.draggable.getId()].getValue;
             if (getValue) {
-                addSun(getValue(ui.draggable));
+                addMoney(getValue(ui.draggable));
                 ui.draggable.remove();
             }
         },
     });
-    // $("#sunBar").html(DATA.sun + "/" + DATA.maxSun);
+    $("#moneyWrapper").html(DATA.money + "&nbsp;");
+}
+
+function refreshShopUI() {
+    const shop = $('#shopWrapper');
+    shop.empty();
+
+    const icons = [
+        { id: 'springSeedBag', price: 41 },
+        { id: 'summerSeedBag', price: 64 },
+        { id: 'autumnSeedBag', price: 143 },
+        { id: 'winterSeedBag', price: 220 },
+    ];
+
+    springVegetables.forEach(vegetable => {
+        const def = DEFINITIONS[vegetable];
+        const imgCoords = def.images[0].split(',');
+        const img = `vegetables/row-${imgCoords[0]}-column-${imgCoords[1]}`;
+        icons.push({ id: vegetable, img, price: def.price })
+    })
+
+    icons.forEach(({ price, id, img }) => {
+        const div = $(`<div class="shopIcon"><img src="images/${img ?? id}.png"><div class="price"><div class="priceWrapper">${price}</div>&nbsp;<img src="images/coin.png"></div></div>`);
+        div.on('click', () => {
+            if (DATA.money >= price) {
+                addMoney(-price);
+                const obj = createObject({ id, x: 0, y: 0 });
+                popObj(obj);
+                toggleShop();
+            }
+        })
+        shop.append(div);
+    });
 }
 
 load();
@@ -257,3 +297,19 @@ if ($(".obj").length === 0) {
 setInterval(save, 10 * 1000);
 setInterval(step, 1000);
 refreshUI();
+addSun((Date.now() - DATA.lastOnline) / (1000));
+
+const shopButton = $("#shopButton");
+shopButton.on('click', toggleShop);
+// toggleShop();
+
+function toggleShop() {
+    const shop = $("#shop");
+    shop.css('transition', 'margin .5s');
+    if (shop.hasClass('shown')) {
+        shop.removeClass('shown');
+    } else {
+        shop.addClass('shown');
+        refreshShopUI();
+    }
+}

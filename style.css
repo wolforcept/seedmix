@@ -104,6 +104,11 @@ body {
     z-index: 999999;
 }
 
+#sellBar img {
+    height: 8vw;
+    transform: translateY(1vw);
+}
+
 #sellBar.visible {
     transition: margin-top 0.2s;
     margin-top: 0;
@@ -151,4 +156,99 @@ body {
         width: auto;
     }
 
+}
+
+#shop {
+    position: fixed;
+    width: 90vw;
+    height: calc(100% - 20vw);
+    background-color: #222223FA;
+    border: 1vw dashed black;
+    box-sizing: border-box;
+    z-index: 99999;
+    left: 5vw;
+    top: 5vw;
+    border-radius: 4vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 100%;
+}
+
+#shop.shown {
+    margin-left: 0;
+}
+
+#shop .title {
+    padding-top: 2vw;
+    color: white;
+    font-size: 10vw;
+    font-weight: bold;
+}
+
+#shop .footer {
+    color: white;
+    font-size: 10vw;
+    font-weight: bold;
+    height: 20vw;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#shop .footer img {
+    height: 10vw;
+}
+
+#shop #shopWrapper {
+    padding: 5vw;
+    flex-grow: 1;
+
+    display: grid;
+    /* flex-direction: row;
+    flex-wrap: wrap;
+    grid-auto-columns: 25vw; */
+    grid-template-columns: repeat(5, 1fr);
+
+}
+
+#shop .shopIcon {
+    width: 15vw;
+    height: 22vw;
+    /* background-color: red; */
+
+    position: relative;
+    margin: 1vw;
+}
+
+#shop .shopIcon img {
+    width: 15vw;
+    transform: translateY(-50%);
+}
+
+#shop .shopIcon .price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    position: absolute;
+    bottom: 0;
+
+    color: white;
+    font-size: 4vw;
+    font-weight: bold;
+}
+
+#shop .shopIcon .price img {
+    height: 5vw;
+    width: auto;
+    transform: none;
 }

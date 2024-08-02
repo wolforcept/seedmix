@@ -39,6 +39,13 @@ $.fn.getStage = function () {
     return Number(str);
 };
 
+$.fn.getStars = function () {
+    const id = this.getId();
+    const stage = this.getStage();
+    const maxStage = DEFINITIONS[id].maxStage ?? 1;
+    return Math.max(0, stage - maxStage);
+};
+
 $.fn.render = function () {
     const id = this.getId();
     const def = DEFINITIONS[id];
