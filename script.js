@@ -20,6 +20,8 @@ function popObj(obj) {
 
     const freePlaces = Object.keys(places).filter(x => places[x]);
 
+    if (freePlaces.length === 0) return;
+
     const place = freePlaces.random().split(',');
 
     const x2 = Number(place[0]);
@@ -58,11 +60,12 @@ function popObj(obj) {
         const dx = Math.abs(x2 - x);
         const dy = Math.abs(y2 - y);
 
+        // obj.css('z-index', 99999999);
         if (dx < 1 && dy < 1) {
             clearInterval(interval);
-            obj.css('z-index', 99999999);
             obj.setX(x2);
             obj.setY(y2);
+            // align(obj);
         } else {
             x = (x - x2) * .9 + x2;
             y = (y - y2) * .9 + y2;
@@ -142,6 +145,7 @@ function align(obj) {
     const s = SIZE * $('body').width() / 100;
     obj.setX(s * Math.round(obj.getX() / s));
     obj.setY(s * Math.round(obj.getY() / s));
+    obj.css('z-index', Math.floor(obj.getY()));
 }
 
 function createObject(props) {
@@ -165,7 +169,7 @@ function createObject(props) {
             obj.attr('starty', obj.getY());
         },
         drag: (event, ui) => {
-            obj.css('z-index', 20000);
+            obj.css('z-index', 999999);
             const def = DEFINITIONS[obj.getId()];
             if (def.getValue) {
                 const value = def.getValue(obj);
@@ -177,8 +181,6 @@ function createObject(props) {
             }
         },
         stop: (event, ui) => {
-            obj.css('z-index', 10000 + obj.getY());
-
             const width = $('body').width();
             const height = $('body').height();
             const s = SIZE * width / 100;
@@ -192,7 +194,7 @@ function createObject(props) {
                 obj.setX(Number(obj.attr('startx')));
                 obj.setY(Number(obj.attr('starty')));
             }
-
+            align(obj);
             $('#sellBar').removeClass("visible");
         },
     });
@@ -224,10 +226,12 @@ function step() {
     addSun(1);
     $(".obj").each((_, x) => {
         const obj = $(x);
-        const def = DEFINITIONS[obj.getId()];
-        const step = def.step;
+        const { step } = DEFINITIONS[obj.getId()];
         if (step) step(obj);
+        // obj.css('z-index', 10000 - obj.getY());
+        // console.log(obj.css('z-index'))
     });
+
     refreshUI();
 }
 

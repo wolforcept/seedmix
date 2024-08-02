@@ -100,6 +100,8 @@ body {
     transition: margin-top 1s;
 
     max-height: 128px;
+
+    z-index: 999999;
 }
 
 #sellBar.visible {
