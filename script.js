@@ -210,7 +210,7 @@ function createObject(props) {
             }
             align(obj);
             $('#sellBar').removeClass("visible");
-            // $('#detailBar').removeClass("visible");
+            $('#detailBar').removeClass("visible");
         },
     });
 
