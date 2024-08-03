@@ -163,7 +163,7 @@ function createObject(props) {
     obj.setX(x);
     obj.setY(y);
 
-    if (onClick) obj.on('click', () => onClick(obj));
+    //if (onClick) obj.on('click', () => onClick(obj));
 
     obj.draggable({
         start: () => {
