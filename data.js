@@ -169,7 +169,7 @@ const DEFINITIONS = {
     },
     "green bean": {
         color: "8ec764",
-        maxStage: 7,
+        maxStage: 6,
         row: 1, col: 10,
         values: [12, 25, 40, 100],
         price: 24,
