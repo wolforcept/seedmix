@@ -97,32 +97,36 @@ const DEFINITIONS = {
     "springSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        images: [],
         onClick: (obj) => seedBagClicked(obj, "spring"),
     },
     "summerSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        images: [],
         onClick: (obj) => seedBagClicked(obj, "summer"),
     },
     "autumnSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        images: [],
         onClick: (obj) => seedBagClicked(obj, "autumn"),
     },
     "winterSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        images: [],
         onClick: (obj) => seedBagClicked(obj, "winter"),
     },
+
+    // SPECIAL 
+
     "carrot": {
         color: "e4831c",
         maxStage: 4,
         row: 25, col: 2,
-        step: generateSunRelativeToStage
+    },
+
+    "coffee bean": {
+        color: "e4831c",
+        maxStage: 6,
+        row: 21, col: 2,
     },
 
     // SPRING
@@ -148,7 +152,6 @@ const DEFINITIONS = {
         maxStage: 4,
         values: [12, 25, 40, 100],
         price: 11,
-        step: generateSunRelativeToStage
     },
     "potato": {
         color: "a47d4f",
@@ -156,7 +159,6 @@ const DEFINITIONS = {
         row: 2, col: 10,
         values: [12, 25, 40, 100],
         price: 24,
-        step: generateSunRelativeToStage
     },
     "strawberry": {
         color: "b72238",
@@ -164,7 +166,6 @@ const DEFINITIONS = {
         row: 19, col: 2,
         values: [12, 25, 40, 100],
         price: 24,
-        step: generateSunRelativeToStage
     },
     "green bean": {
         color: "8ec764",
@@ -172,7 +173,6 @@ const DEFINITIONS = {
         row: 1, col: 10,
         values: [12, 25, 40, 100],
         price: 24,
-        step: generateSunRelativeToStage
     },
     "garlic": {
         color: "b38297",
@@ -180,24 +180,273 @@ const DEFINITIONS = {
         row: 3, col: 2,
         values: [12, 25, 40, 100],
         price: 36,
-        step: generateSunRelativeToStage
     },
     "cauliflower": {
         color: "e3d5b8",
+        row: 2, col: 2,
         maxStage: 6,
-        images: ["2,2", "2,3", "2,4", "2,5", "2,6", "2,7"],
         values: [12, 25, 40, 100],
         price: 51,
-        step: generateSunRelativeToStage
     },
+
+    // SUMMER
+
+
+    "rice": {
+        color: "b98722",
+        maxStage: 5,
+        row: 18, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "blueberry": {
+        color: "31427f",
+        maxStage: 6,
+        row: 5, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "corn": {
+        color: "ffef8a",
+        maxStage: 6,
+        row: 8, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "hops": {
+        color: "e5ee9c",
+        maxStage: 6,
+        row: 19, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "hot pepper": {
+        color: "a31512",
+        maxStage: 6,
+        row: 5, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "melon": {
+        color: "d5645f",
+        maxStage: 6,
+        row: 4, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "radish": {
+        color: "ad0e35",
+        maxStage: 5,
+        row: 7, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "red cabbage": {
+        color: "b15c92",
+        maxStage: 6,
+        row: 7, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "starfruit": {
+        color: "f9d429",
+        maxStage: 6,
+        row: 8, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "squash": {
+        color: "c4ad24",
+        maxStage: 6,
+        row: 25, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "tomato": {
+        color: "a31512",
+        maxStage: 6,
+        row: 5, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "wheat": {
+        color: "f6e6ab",
+        maxStage: 5,
+        row: 6, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    // AUTUMN
+
+    "amaranth": {
+        color: "6b3861",
+        maxStage: 5,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "artichoke": {
+        color: "133e0e",
+        maxStage: 6,
+        row: 9, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "beet": {
+        color: "9b7c8f",
+        maxStage: 5,
+        row: 12, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "bok choy": {
+        color: "e9f0d2",
+        maxStage: 5,
+        row: 10, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "broccoli": {
+        color: "084f21",
+        maxStage: 5,
+        row: 26, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "cranberries": {
+        color: "822633",
+        maxStage: 6,
+        row: 11, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "eggplant": {
+        color: "1b133b",
+        maxStage: 6,
+        row: 9, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "grape": {
+        color: "492562",
+        maxStage: 6,
+        row: 20, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "pumpkin": {
+        color: "d87219",
+        maxStage: 6,
+        row: 10, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "yam": {
+        color: "b6706b",
+        maxStage: 5,
+        row: 11, col: 2,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    // WINTER
+
+    "powdermelon": {
+        color: "bde6d0",
+        maxStage: 6,
+        row: 26, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    // OTHER
+
+    "ancient fruit": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "cactus": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "fiber": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "pineapple": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "taro root": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "sweet berry": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
+    "tea": {
+        color: "e3d5b8",
+        maxStage: 6,
+        row: 20, col: 10,
+        values: [12, 25, 40, 100],
+        price: 51,
+    },
+
 }
 
-const springVegetables = ["kale", "parsnip", "rhubarb", "potato", "strawberry", "green bean", "garlic", "cauliflower"];
-const summerVegetables = ["potato", "strawberry", "green bean", "garlic", "cauliflower"];
-const autumnVegetables = ["green bean", "garlic", "cauliflower"];
-const winterVegetables = ["cauliflower"];
-
-const allVegetables = [...springVegetables];
+const specialVegetables = ["carrot", "coffee bean", "ancient fruit", "cactus", "fiber", "pineapple", "taro root", "sweet berry", "tea"];
+const springVegetables = ["kale", "parsnip", "rhubarb", "potato", "strawberry", "green bean", "garlic", "cauliflower",]; // 8
+const summerVegetables = ["rice", "blueberry", "corn", "hops", "hot pepper", "melon", "radish", "red cabbage", "starfruit", "squash", "tomato", "wheat",]; // 12
+const autumnVegetables = ["amaranth", "artichoke", "beet", "bok choy", "broccoli", "cranberries", "eggplant", "grape", "pumpkin", "yam",]; // 12
+const winterVegetables = ["powdermelon"]; // 8
+const allNormalVegetables = [...springVegetables, ...summerVegetables, ...autumnVegetables, ...winterVegetables];
+const allVegetables = [...specialVegetables, ...springVegetables, ...summerVegetables, ...autumnVegetables, ...winterVegetables];
 
 allVegetables.forEach(id => {
     const def = DEFINITIONS[id];
@@ -206,13 +455,21 @@ allVegetables.forEach(id => {
     def.step = generateSunRelativeToStage;
     // def.getValue = () => 10;
     if (def.values)
-        def.getValue = (obj) => def.values[obj.getStage() - def.maxStage] ?? 0;
+        def.getValue = (obj) => {
+            if (!obj) return def.values[def.values.length - 1];
+            const stars = obj.getStars();
+            if (stars <= 0) return 2;
+            return (def.values[obj.getStage() - def.maxStage] ?? 2);
+        }
 
-    if (def.row && def.col) {
+    if (def.row !== undefined && def.col !== undefined) {
         def.images = [];
         for (let i = 0; i < def.maxStage; i++)
             def.images[i] = def.row + "," + (def.col + i);
     }
+
+    def.id = id;
+    def.name = String(id).titleCase();
 });
 
 Object.keys(DEFINITIONS).forEach(id => {

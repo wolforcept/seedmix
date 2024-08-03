@@ -8,7 +8,7 @@ function popObj(obj) {
 
     const places = {};
     for (let x = 0; x < width - s; x += s) {
-        for (let y = 0; y < height - s; y += s) {
+        for (let y = s; y < height - s - s; y += s) {
             places[Math.floor(x) + "," + Math.floor(y)] = true;
         }
     }
@@ -172,13 +172,21 @@ function createObject(props) {
         },
         drag: (event, ui) => {
             obj.css('z-index', 999999);
-            const def = DEFINITIONS[obj.getId()];
+            const id = obj.getId();
+            const def = DEFINITIONS[id];
             if (def.getValue) {
                 const value = def.getValue(obj);
                 if (value > 0) {
                     const sellBar = $('#sellBar');
                     sellBar.addClass("visible");
                     sellBar.html(`Sell for ${value} <img src="images/coin.png">`);
+
+                    const detailBar = $('#detailBar');
+                    detailBar.addClass("visible");
+                    // detailBar.html(`${def.name}`);
+                    $('#detailBar .left').html(`${def.name}`);
+                    $('#detailBar .right').html(`${def.getValue()} <img src="images/coin.png">`);
+                    detailBar.css('background-color', "#" + def.color)
                 }
             }
         },
@@ -202,6 +210,7 @@ function createObject(props) {
             }
             align(obj);
             $('#sellBar').removeClass("visible");
+            // $('#detailBar').removeClass("visible");
         },
     });
 
@@ -268,7 +277,7 @@ function refreshShopUI() {
         { id: 'winterSeedBag', price: 220 },
     ];
 
-    springVegetables.forEach(vegetable => {
+    allNormalVegetables.forEach(vegetable => {
         const def = DEFINITIONS[vegetable];
         const imgCoords = def.images[0].split(',');
         const img = `vegetables/row-${imgCoords[0]}-column-${imgCoords[1]}`;

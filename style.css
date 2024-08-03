@@ -191,18 +191,21 @@ body {
 
 #shop .footer {
     color: white;
-    font-size: 10vw;
+    font-size: 7vw;
     font-weight: bold;
-    height: 20vw;
+    height: 10vw;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    background-color: #00000066;
+    width: 100%;
 }
 
 #shop .footer img {
-    height: 10vw;
+    height: 7vw;
 }
 
 #shop #shopWrapper {
@@ -215,6 +218,8 @@ body {
     grid-auto-columns: 25vw; */
     grid-template-columns: repeat(5, 1fr);
 
+    overflow-y: scroll;
+
 }
 
 #shop .shopIcon {
@@ -224,6 +229,13 @@ body {
 
     position: relative;
     margin: 1vw;
+
+    overflow: hidden;
+    background-color: #00000033;
+    border-radius: 2vw;
+    box-sizing: border-box;
+    border: 1px solid black;
+
 }
 
 #shop .shopIcon img {
@@ -251,4 +263,56 @@ body {
     height: 5vw;
     width: auto;
     transform: none;
+}
+
+
+#detailBar {
+    position: fixed;
+    bottom: 2vw;
+    height: 10vw;
+    width: 90vw;
+    left: 5vw;
+
+    border-radius: 4vw;
+    border: 1vw dashed #00000022;
+
+    overflow: hidden;
+
+    color: white;
+    font-weight: bold;
+    font-size: 8vw;
+
+    text-align: center;
+
+    margin-bottom: -100%;
+    transition-timing-function: linear;
+    transition: margin-top 1s;
+
+    max-height: 128px;
+
+    z-index: 999999;
+
+    text-shadow: #000000 0 0 2vw;
+
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+}
+
+#detailBar .left {
+    width: 60vw;
+    text-align: left;
+    padding-left: 5vw;
+}
+
+#detailBar .right {}
+
+#detailBar.visible {
+    transition: margin-bottom 0.2s;
+    margin-bottom: 0;
+}
+
+#detailBar img {
+    height: 8vw;
+    transform: translateY(1vw);
 }
