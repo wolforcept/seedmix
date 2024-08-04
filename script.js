@@ -179,7 +179,7 @@ function createObject(props) {
             const def = DEFINITIONS[id];
             if (def.getValue) {
                 const value = def.getValue(obj);
-                if (value > 0) {
+                if (value >= 0) {
                     const sellBar = $('#sellBar');
                     sellBar.addClass("visible");
                     sellBar.html(`Sell for ${value} <img src="images/coin.png">`);

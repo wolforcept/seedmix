@@ -407,7 +407,7 @@ const allVegetables = [...specialVegetables, ...springVegetables, ...summerVeget
             const s1 = 1 + (i + j);
             const s2 = 1 + (j + v);
             const s3 = 1 + (i + j + v);
-            def.values[v] = s1 * Math.floor(4 + .9 * (s3 * s2));
+            def.values[v] = s1 * Math.floor(4 + .9 * (s3 + s2));
         }
         def.price = def.values[0];
 
@@ -420,14 +420,13 @@ allVegetables.forEach(id => {
     // def.images.forEach((_, i) => def.images[i] = `vegetables/${def.images[i].split(',')[0]},${def.images[i].split(',')[1]}`);
     def.isVegetable = true;
     def.step = generateSunRelativeToStage;
-    // def.getValue = () => 10;
 
     if (def.values)
         def.getValue = (obj) => {
             if (!obj) return def.values[def.values.length - 1];
             const stars = obj.getStars();
-            if (stars < 0) return 2;
-            return (def.values[obj.getStage() - def.maxStage] ?? 2);
+            if (stars < 0) return 0;
+            return (def.values[obj.getStage() - def.maxStage] ?? 0);
         }
 
     if (def.row !== undefined && def.col !== undefined) {
