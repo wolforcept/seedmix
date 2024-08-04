@@ -1,14 +1,15 @@
-SIZE = 16;
-const c = 0;
+const SIZE = 16;
+function S() { return $('html').width() * SIZE / 100; }
+
 function popObj(obj) {
 
     const width = $('body').width();
     const height = $('body').height();
-    const s = width * SIZE / 100;
+    const s = S();
 
     const places = {};
     for (let x = 0; x < width - s; x += s) {
-        for (let y = s; y < height - s - s; y += s) {
+        for (let y = 0; y < 10 * s; y += s) {
             places[Math.floor(x) + "," + Math.floor(y)] = true;
         }
     }
@@ -158,7 +159,7 @@ function createObject(props) {
     obj.attr('id', id);
     obj.attr('stage', stage);
     if (scale) obj.css("transform", `scale(${scale})`);
-    $('body').append(obj);
+    $('#container').append(obj);
     obj.render();
     obj.setX(x);
     obj.setY(y);
@@ -166,6 +167,7 @@ function createObject(props) {
     if (onClick) obj.on('click', () => onClick(obj));
 
     obj.draggable({
+        containment: "#container",
         start: () => {
             obj.attr('startx', obj.getX());
             obj.attr('starty', obj.getY());
@@ -264,6 +266,9 @@ function refreshUI() {
         },
     });
     $("#moneyWrapper").html(DATA.money + "&nbsp;");
+    const s = S();
+    $("#container").css("height", (10 * s) + 'px');
+    $("#container").css("width", Math.floor($('html').width() / s) * s);
 }
 
 function refreshShopUI() {
@@ -306,7 +311,8 @@ if ($(".obj").length === 0) {
 setInterval(save, 10 * 1000);
 setInterval(step, 1000);
 refreshUI();
-addSun((Date.now() - DATA.lastOnline) / (1000));
+if (DATA.lastOnline)
+    addSun((Date.now() - DATA.lastOnline) / (1000));
 
 const shopButton = $("#shopButton");
 shopButton.on('click', toggleShop);

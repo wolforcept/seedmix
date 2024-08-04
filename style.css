@@ -6,8 +6,31 @@ body {
     overflow: hidden;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#container {
+    background-color: rgba(0, 255, 85, 0.336);
+
+    position: relative;
+    border-radius: 5vw;
+}
+
+#bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    width: 100%;
+}
+
 .obj {
-    position: fixed;
+    position: absolute;
 
     border-radius: 25%;
     background-color: red;
@@ -44,11 +67,8 @@ body {
 }
 
 #sunBarWrapper {
-    position: fixed;
-    bottom: 2vw;
     height: 8vw;
-    width: 72vw;
-    left: 13vw;
+    width: 66vw;
 
     background-color: #ffe60009;
 
@@ -76,7 +96,6 @@ body {
 }
 
 #sellBar {
-    position: fixed;
     top: 2vw;
     height: 10vw;
     width: 90vw;
@@ -95,13 +114,13 @@ body {
 
     text-align: center;
 
-    margin-top: -100%;
     transition-timing-function: linear;
-    transition: margin-top 1s;
 
     max-height: 128px;
 
     z-index: 999999;
+    transition: opacity .2s;
+    opacity: 0%;
 }
 
 #sellBar img {
@@ -110,22 +129,13 @@ body {
 }
 
 #sellBar.visible {
-    transition: margin-top 0.2s;
-    margin-top: 0;
+    opacity: 100%;
 }
 
 #gearButton,
 #shopButton {
-    position: fixed;
-    bottom: 2vw;
     height: 10vw;
     width: 10vw;
-    left: 1.7vw;
-}
-
-#shopButton {
-    left: auto;
-    right: 1.7vw;
 }
 
 #gearButton img,
@@ -268,6 +278,7 @@ body {
 
 #detailBar {
     position: fixed;
+
     bottom: 2vw;
     height: 10vw;
     width: 90vw;
