@@ -65,7 +65,7 @@ function popSunRelativeToStage(obj, probs = [.001, .002, .005]) {
     }
 }
 
-function seedBagClicked(obj, season, primaryCost) {
+function seedBagClicked(obj, season, primaryCost, isSuper) {
 
     const stars = obj.getStars();
     const calculatedCost = Math.floor(primaryCost / (([1, 1.5, 2, 3])[stars]));
@@ -81,11 +81,17 @@ function seedBagClicked(obj, season, primaryCost) {
     const values = [0, 0, 1, 5, 10, 30, 100, 200];
     $('.obj').each((_, o) => totalStages += values[Number($(o).getStage())]);
     console.log("totalStages:", totalStages);
-    const stdev = totalStages > 1000 ? 3 : totalStages > 100 ? 2 : 1;
 
-    const id = ({
+    const stdev = stars === 3 ? 3.5
+        : stars === 2 ? 2.2
+            : stars === 1 ? 1.5
+                : 1;
+
+    const arr = ({
         spring: springVegetables, summer: summerVegetables, autumn: autumnVegetables, winter: winterVegetables
-    })[season].gaussianRandom(stdev);
+    })[season];
+    if (isSuper) arr.reverse();
+    const id = arr.gaussianRandom(stdev);
     const newObj = createObject({ id, stage: 1, x: obj.getX(), y: obj.getY() });
     popObj(newObj);
 }
@@ -123,22 +129,22 @@ const DEFINITIONS = {
     "springSuperSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        onClick: (obj) => seedBagClicked(obj, "spring", 20),
+        onClick: (obj) => seedBagClicked(obj, "spring", 20, true),
     },
     "summerSuperSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        onClick: (obj) => seedBagClicked(obj, "summer", 50),
+        onClick: (obj) => seedBagClicked(obj, "summer", 50, true),
     },
     "autumnSuperSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        onClick: (obj) => seedBagClicked(obj, "autumn", 100),
+        onClick: (obj) => seedBagClicked(obj, "autumn", 100, true),
     },
     "winterSuperSeedBag": {
         color: "33ae5a",
         maxStage: 1,
-        onClick: (obj) => seedBagClicked(obj, "winter", 200),
+        onClick: (obj) => seedBagClicked(obj, "winter", 200, true),
     },
 
     // SPRING
