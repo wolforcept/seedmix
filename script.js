@@ -295,7 +295,7 @@ function refreshShopUI() {
     })
 
     icons.forEach(({ price, id, img }) => {
-        const div = $(`<div class="shopIcon"><img src="images/${img ?? id}.png"><div class="price"><div class="priceWrapper">${price}</div>&nbsp;<img src="images/coin.png"></div></div>`);
+        const div = $(`<div class="shopIcon" style="background-color: #${DEFINITIONS[id].color}"><img src="images/${img ?? id}.png"><div class="price"><div class="priceWrapper">${price}</div>&nbsp;<img src="images/coin.png"></div></div>`);
         div.on('click', () => {
             if (DATA.money >= price) {
                 addMoney(-price);

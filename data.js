@@ -335,13 +335,13 @@ const DEFINITIONS = {
     },
 
     "ancient fruit": {
-        color: "e3d5b8",
+        color: "a5b4d1",
         maxStage: 6,
         row: 13, col: 2,
     },
 
     "cactus": {
-        color: "e3d5b8",
+        color: "789156",
         maxStage: 6,
         row: 21, col: 10,
     },
@@ -359,7 +359,7 @@ const DEFINITIONS = {
     },
 
     "taro root": {
-        color: "e3d5b8",
+        color: "80654a",
         maxStage: 5,
         row: 22, col: 2,
     },
