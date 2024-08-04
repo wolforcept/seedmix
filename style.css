@@ -6,6 +6,10 @@ body {
     overflow: hidden;
 }
 
+img {
+    image-rendering: pixelated;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -50,7 +54,6 @@ body {
 
 .obj img {
     pointer-events: none;
-    image-rendering: pixelated;
 }
 
 .obj img.img {
