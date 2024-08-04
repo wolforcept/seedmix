@@ -167,7 +167,8 @@ function createObject(props) {
     if (onClick) obj.on('click', () => onClick(obj));
 
     obj.draggable({
-        containment: "#container",
+        // containment: "#container",
+        // revert: 'invalid',
         start: () => {
             obj.attr('startx', obj.getX());
             obj.attr('starty', obj.getY());
@@ -280,6 +281,10 @@ function refreshShopUI() {
         { id: 'summerSeedBag', price: 64 },
         { id: 'autumnSeedBag', price: 143 },
         { id: 'winterSeedBag', price: 220 },
+        { id: 'springSuperSeedBag', price: 476 },
+        { id: 'summerSuperSeedBag', price: 782 },
+        { id: 'autumnSuperSeedBag', price: 1406 },
+        { id: 'winterSuperSeedBag', price: 3333 },
     ];
 
     allNormalVegetables.forEach(vegetable => {
